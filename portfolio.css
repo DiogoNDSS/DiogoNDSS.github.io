@@ -15,20 +15,28 @@ p {font-size: 1.2em; line-height: 1.4em; color: #141A28;}
 h2 {color: #8b8c90;}
 
 .containermenu {
+
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Para garantir que a navbar fique acima de outros elementos */
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #232323;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .container {
     width: 960px;
     margin: 0 auto;
     padding: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.container {
-    width: 960px;
-    margin: 0 auto;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-around; /* Distribui o espaço ao redor dos elementos */
+    align-items: center; /* Centraliza verticalmente */
+
+     
 }
 
 html, body {
@@ -73,104 +81,74 @@ header {
 
 main {width: 100%;}
 
-.super-card {
+.flip-card {
+    background-color: transparent;
+    width: 300px;
+    height: 500px;
+    perspective: 1000px;
+    font-family: sans-serif;
+        margin: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  }
+  
+  .title {
+    font-size: 1.5em;
+    font-weight: 900;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .flip-card-inner {
+    position: relative;
     width: 100%;
-    display: flex;
-    margin-top: 20px;
-}
-
-.super-card-img, 
-.super-card-img img {
-    width: 800px;
-    border-radius: 50%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front, .flip-card-back {
+    box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
+    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-}
-
-.super-card-img h2 {margin-top: 20px;}
-
-.super-card-text {margin-left: 40px;}
-
-.super-card-text p + p {margin-top: 1em;}
-
-
-.card {
-    max-width: 350px;
-    min-height: 500px;
-    border-radius: 3px;
-    margin: 1em;
-    background-color: #FFF;
-    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, .15);
-    transition: all .3s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.card:hover { box-shadow: 30px 30px 5px 0px rgba(0, 0, 0, .15); }
-
-.card-img { padding: 1em; }
-
-.img-body,
-.img-body img {
-    width: 200px;
-    display: table;
-    margin: 0 auto; 
-    border-radius: 50%;
-}
-
-.card-body { padding: 1em; }
-.card-body p {
-    color: #343A40;
-    line-height: 1.4em;
-}
-
-.card-body p + p { margin-top: .5em;}
-
-.card-button {
     width: 100%;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
-    padding: 1em;
-    background-color: #232323;
-    display: flex;
-    justify-content: center;
-}
-
-.card-button button {
-    width: 250px;
-    padding: 1em;
-    border: none;
-    border-radius: 3px;
-    background-image: linear-gradient(to right bottom, #5c5c5c, #5c5c5c, #5c5c5c, #5c5c5c, #5c5c5c);
-    color: #E9F3FE;
-    font-size: 1.2em;
-    text-transform: capitalize;
-    transition: all .3s ease-in-out;
-}
-
-.card-button button:hover {
-    cursor: pointer;
-    opacity: .75;
-}
-
-.sub-title {margin: 20px auto;}
-
-.li-ornament { margin: 10px 0; }
-
-.li-ornament::before {
-    content: "";
-    display: inline-block;
-    width: 4px;
-    height: 12px;
-    margin-right: 10px;
-    background-color: #232323;
-    border-radius: 5px;
-}
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 1rem;
+  }
+  
+  .flip-card-front {
+    background: linear-gradient(120deg, rgb(255, 255, 255) 60%, rgb(54, 54, 54) 88%,
+       rgb(255, 255, 255) 40%, rgba(0, 0, 0, 0.603) 48%);
+    color: rgb(0, 0, 0);
+  }
+  
+  .flip-card-back {
+    background: linear-gradient(120deg, rgb(255, 255, 255) 30%, rgb(54, 54, 54) 88%,
+       rgb(255, 255, 255) 40%, rgb(0, 0, 0) 78%);
+    color: rgb(0, 0, 0);
+    transform: rotateY(180deg);
+  }
 .contact-link {color: #000000;}
 
 .map {
     margin: 20px 0;
+}
+
+body{
+    --color: #E1E1E1;
+        background-color: #F3F3F3;
+        background-image: linear-gradient(0deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent),
+            linear-gradient(90deg, transparent 24%, var(--color) 25%, var(--color) 26%, transparent 27%,transparent 74%, var(--color) 75%, var(--color) 76%, transparent 77%,transparent);
+        background-size: 55px 55px;
 }
