@@ -23,17 +23,13 @@ document.addEventListener('mousemove', (e) => {
 const navbarParent = document.getElementById('navbar-parent');
 const navInner = document.getElementById('nav-inner');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-        navbarParent.classList.add('pt-6'); 
-        navInner.classList.remove('w-full', 'bg-transparent', 'px-6', 'md:px-12', 'xl:px-20', 'rounded-none', 'border-transparent');
-        navInner.classList.add('w-[95%]', 'max-w-6xl', 'px-8', 'md:px-12', 'rounded-full', 'backdrop-blur-md', 'bg-zinc-900/80', 'border-zinc-800/50', 'shadow-[0_10px_30px_-10px_rgba(0,0,0,0.7)]');
-    } else {
-        navbarParent.classList.remove('pt-6');
-        navInner.classList.add('w-full', 'bg-transparent', 'px-6', 'md:px-12', 'xl:px-20', 'rounded-none', 'border-transparent');
-        navInner.classList.remove('w-[95%]', 'max-w-6xl', 'px-8', 'md:px-12', 'rounded-full', 'backdrop-blur-md', 'bg-zinc-900/80', 'border-zinc-800/50', 'shadow-[0_10px_30px_-10px_rgba(0,0,0,0.7)]');
-    }
-});
+const keepNavbarDetached = () => {
+    navbarParent.classList.add('pt-6');
+    navInner.classList.remove('w-full', 'bg-transparent', 'xl:px-20', 'rounded-none', 'border-transparent');
+    navInner.classList.add('w-[95%]', 'max-w-6xl', 'px-8', 'md:px-12', 'rounded-full', 'backdrop-blur-md', 'bg-zinc-900/80', 'border-zinc-800/50', 'shadow-[0_10px_30px_-10px_rgba(0,0,0,0.7)]');
+};
+
+keepNavbarDetached();
 
 // Animação de Scroll Reveal para o Contato
 const observerOptions = {
@@ -52,4 +48,34 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal-element').forEach((el) => {
     observer.observe(el);
+});
+
+// Menu Mobile
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+
+// Abrir/Fechar menu
+mobileMenuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.style.maxHeight && mobileMenu.style.maxHeight !== '0px';
+    
+    if (isOpen) {
+        mobileMenu.style.maxHeight = '0px';
+    } else {
+        mobileMenu.style.maxHeight = mobileMenu.scrollHeight + 'px';
+    }
+});
+
+// Fechar menu ao clicar em um link
+mobileMenuLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenu.style.maxHeight = '0px';
+    });
+});
+
+// Fechar menu ao clicar fora
+document.addEventListener('click', (e) => {
+    if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.style.maxHeight = '0px';
+    }
 });

@@ -61,3 +61,69 @@ body { font-family: 'Inter', sans-serif; }
 .reveal-delay-2 { transition-delay: 200ms; }
 .reveal-delay-3 { transition-delay: 300ms; }
 .reveal-delay-4 { transition-delay: 400ms; }
+
+/* Animação de Partículas Flutuantes no lado direito */
+@keyframes float-up {
+    0% { transform: translateY(100vh) translateX(var(--x, 0)) scale(1); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100vh) translateX(var(--x, 0)) scale(0.3); opacity: 0; }
+}
+
+.floating-particle {
+    position: absolute;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.floating-particle::before {
+    content: '';
+    display: block;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.8);
+}
+
+.floating-particle:nth-child(1) { animation: float-up 8s ease-in infinite; left: 70%; --x: 0px; animation-delay: 0s; }
+.floating-particle:nth-child(2) { animation: float-up 10s ease-in infinite; left: 75%; --x: 20px; animation-delay: 1s; }
+.floating-particle:nth-child(3) { animation: float-up 12s ease-in infinite; left: 80%; --x: -15px; animation-delay: 2s; }
+.floating-particle:nth-child(4) { animation: float-up 9s ease-in infinite; left: 85%; --x: 25px; animation-delay: 3s; }
+.floating-particle:nth-child(5) { animation: float-up 11s ease-in infinite; left: 78%; --x: -20px; animation-delay: 1.5s; }
+.floating-particle:nth-child(6) { animation: float-up 13s ease-in infinite; left: 82%; --x: 10px; animation-delay: 2.5s; }
+
+/* Menu Mobile Styles */
+#mobile-menu {
+    max-height: 0;
+}
+
+/* Responsividade melhorada para telas pequenas */
+@media (max-width: 768px) {
+    #mobile-menu {
+        max-height: 0;
+        overflow: hidden;
+    }
+    
+    #mobile-menu.active {
+        max-height: 300px;
+    }
+    
+    #mobile-menu ul li a {
+        display: block;
+        padding: 12px 0;
+    }
+    
+    /* Ajustar tamanho de fonte em elementos pequenos */
+    h1 {
+        font-size: clamp(24px, 8vw, 48px);
+    }
+    
+    p {
+        font-size: clamp(14px, 4vw, 18px);
+    }
+    
+    section {
+        margin-bottom: 2rem !important;
+    }
+}
