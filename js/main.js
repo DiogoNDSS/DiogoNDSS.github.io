@@ -79,3 +79,74 @@ document.addEventListener('click', (e) => {
         mobileMenu.style.maxHeight = '0px';
     }
 });
+(function() {
+        const steps = [
+            {
+                prompt: 'term-line-1',
+                cmd: 'whoami',
+                outId: 'term-out-1',
+                outHTML: '<div class="text-cyan-300">diogo_neves <span class="text-zinc-500">// full-stack dev</span></div>'
+            },
+            {
+                prompt: 'term-line-2',
+                promptWrap: 'term-prompt-2',
+                cmd: 'cat skills.json',
+                outId: 'term-out-2',
+                outHTML: `<div class="text-yellow-300">{</div>
+<div class="pl-4"><span class="text-cyan-300">"frontend"</span><span class="text-zinc-400">:</span> <span class="text-green-300">["React", "Next.js", "TypeScript"]</span><span class="text-zinc-500">,</span></div>
+<div class="pl-4"><span class="text-cyan-300">"backend"</span><span class="text-zinc-400">:</span> <span class="text-green-300">["Node.js", "Laravel", "PHP"]</span><span class="text-zinc-500">,</span></div>
+<div class="pl-4"><span class="text-cyan-300">"cloud"</span><span class="text-zinc-400">:</span> <span class="text-green-300">["AWS", "Azure", "GCP"]</span></div>
+<div class="text-yellow-300">}</div>`
+            },
+            {
+                prompt: 'term-line-3',
+                promptWrap: 'term-prompt-3',
+                cmd: 'git log --oneline -1',
+                outId: 'term-out-3',
+                outHTML: '<div><span class="text-yellow-400">a3f9c12</span> <span class="text-zinc-300">feat: portfolio v2 launched 🚀</span></div>'
+            }
+        ];
+
+        function typeText(elId, text, speed, cb) {
+            const el = document.getElementById(elId);
+            if (!el) return cb && cb();
+            let i = 0;
+            const t = setInterval(() => {
+                el.textContent += text[i++];
+                if (i >= text.length) { clearInterval(t); cb && cb(); }
+            }, speed);
+        }
+
+        function showOutput(outId, html, cb) {
+            const el = document.getElementById(outId);
+            if (!el) return cb && cb();
+            el.innerHTML = html;
+            el.classList.remove('hidden');
+            cb && setTimeout(cb, 600);
+        }
+
+        function showPrompt(wrapId) {
+            if (!wrapId) return;
+            const el = document.getElementById(wrapId);
+            if (el) el.classList.remove('hidden'), el.style.display = 'flex';
+        }
+
+        function runStep(i) {
+            if (i >= steps.length) {
+                const cur = document.getElementById('term-cursor-line');
+                if (cur) { cur.classList.remove('hidden'); cur.style.display = 'flex'; }
+                return;
+            }
+            const s = steps[i];
+            if (s.promptWrap) showPrompt(s.promptWrap);
+            setTimeout(() => {
+                typeText(s.prompt, s.cmd, 60, () => {
+                    setTimeout(() => {
+                        showOutput(s.outId, s.outHTML, () => runStep(i + 1));
+                    }, 300);
+                });
+            }, 400);
+        }
+
+        window.addEventListener('load', () => setTimeout(() => runStep(0), 800));
+    })();
